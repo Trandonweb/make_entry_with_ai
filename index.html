@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10131d">
+  <meta name="description" content="직접 만든 엔트리 작품을 모아 보고 완성된 프로젝트 파일(.ent)을 다운로드하세요.">
+  <title>MAKE ENTRY — 나만의 엔트리 작품 모음</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap');
+    :root{color-scheme:dark;--bg:#10131d;--panel:#181d2a;--panel2:#1e2534;--line:rgba(255,255,255,.09);--text:#f5f7fc;--muted:#9ba6ba;--green:#55d68b;--blue:#73a7ff;--purple:#a78bfa}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Pretendard,"Noto Sans KR",system-ui,sans-serif;min-height:100vh}
+    a{color:inherit;text-decoration:none}
+    .ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:-1}
+    .ambient:before,.ambient:after{content:"";position:absolute;border-radius:50%;filter:blur(100px);opacity:.17}
+    .ambient:before{width:420px;height:420px;background:#367cce;top:-230px;left:8%}
+    .ambient:after{width:420px;height:420px;background:#37b879;right:-230px;top:360px}
+    .wrap{width:min(1120px,calc(100% - 44px));margin:auto}
+    header{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:850;letter-spacing:-.5px}
+    .brand-mark{width:35px;height:35px;border-radius:11px;background:linear-gradient(140deg,#63e69a,#36a9c9);display:grid;place-items:center;color:#102019;font-size:18px;font-weight:900;box-shadow:0 5px 22px #43c98b35}
+    .brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.7px;font-weight:700;margin-top:2px}
+    nav{display:flex;align-items:center;gap:28px;color:#bdc6d5;font-size:13px;font-weight:650}
+    nav a:hover{color:var(--green)}
+    .nav-pill{border:1px solid var(--line);padding:10px 15px;border-radius:999px}
+    .hero{padding:91px 0 76px;display:grid;grid-template-columns:1.15fr .85fr;gap:55px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:#8ce6ae;background:#55d68b13;border:1px solid #55d68b35;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:800;letter-spacing:.8px}
+    .dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}
+    h1{font-size:clamp(42px,6vw,68px);line-height:1.09;letter-spacing:-3.5px;margin:22px 0 18px;font-weight:900}
+    h1 span{background:linear-gradient(100deg,#70e5a0 5%,#78b5ff 75%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{font-size:16px;line-height:1.85;color:var(--muted);max-width:510px;margin:0}
+    .hero-actions{display:flex;align-items:center;gap:12px;margin-top:30px}
+    .primary{display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#102018;font-size:13px;font-weight:850;padding:14px 19px;border-radius:12px;transition:.2s}
+    .primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px #55d68b30}
+    .secondary{color:#c4ccda;font-size:13px;font-weight:700;padding:13px 15px}
+    .visual{position:relative;min-height:310px;display:grid;place-items:center}
+    .orb{position:absolute;width:250px;height:250px;border-radius:50%;background:linear-gradient(140deg,#55d68b2c,#73a7ff20);filter:blur(2px)}
+    .code-card{position:relative;width:min(100%,370px);background:#171e2b;border:1px solid #ffffff18;border-radius:19px;box-shadow:0 25px 80px #0007;transform:rotate(2deg);overflow:hidden}
+    .window-bar{height:43px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 15px;gap:6px}
+    .window-bar i{width:7px;height:7px;border-radius:50%;background:#566174}
+    .window-bar span{margin-left:auto;font-size:10px;color:#7f8ba0;letter-spacing:1px;font-weight:800}
+    .code-body{padding:22px 23px 24px;font:12px/2.05 ui-monospace,SFMono-Regular,Consolas,monospace;color:#aab7cb}
+    .code-body .comment{color:#73829b}.code-body .key{color:#7edda4}.code-body .value{color:#8cbaff}.code-body .purple{color:#c1a4ff}
+    .float-tag{position:absolute;right:-3px;bottom:23px;background:#202a38;border:1px solid #ffffff18;border-radius:12px;padding:12px 15px;box-shadow:0 12px 30px #0005;font-size:11px;color:#dce6f4;font-weight:800}
+    .float-tag b{color:var(--green);font-size:15px;margin-right:5px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:23px}
+    .section-kicker{font-size:10px;letter-spacing:2px;color:var(--green);font-weight:850}
+    h2{font-size:25px;letter-spacing:-1px;margin:8px 0 0}
+    .section-note{color:var(--muted);font-size:12px}
+    .works{padding:20px 0 100px}
+    .empty{border:1px dashed #53617680;border-radius:20px;background:linear-gradient(135deg,#1a2130aa,#171d29aa);min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:35px 20px}
+    .empty-icon{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:#55d68b14;border:1px solid #55d68b35;color:var(--green);font-size:25px;margin-bottom:17px}
+    .empty h3{font-size:18px;margin:0 0 9px;letter-spacing:-.5px}
+    .empty p{font-size:13px;line-height:1.7;color:var(--muted);margin:0;max-width:390px}
+    .empty .status{margin-top:19px;font-size:10px;letter-spacing:1px;color:#8491a6;font-weight:800;background:#ffffff08;border:1px solid var(--line);padding:7px 11px;border-radius:999px}
+    .info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:17px}
+    .info{padding:17px 18px;border:1px solid var(--line);border-radius:14px;background:#ffffff05}
+    .info strong{display:block;font-size:12px;margin-bottom:6px}
+    .info span{font-size:11px;color:var(--muted);line-height:1.6}
+    footer{border-top:1px solid var(--line);padding:25px 0 32px;color:#78859a;font-size:11px}
+    .footer-inner{display:flex;justify-content:space-between;gap:15px;align-items:center}
+    @media(max-width:760px){.wrap{width:min(100% - 34px,560px)}header{height:68px}nav{gap:12px;font-size:11px}.nav-pill{padding:8px 11px}.hero{grid-template-columns:1fr;gap:8px;padding:66px 0 43px}h1{font-size:clamp(43px,12vw,60px);letter-spacing:-2.7px}.visual{min-height:260px}.code-card{max-width:340px}.section-head{align-items:start;gap:10px;flex-direction:column}.info-row{grid-template-columns:1fr}.works{padding-bottom:65px}.footer-inner{align-items:flex-start;flex-direction:column}}
+    @media(max-width:390px){nav a:first-child{display:none}.hero-actions{flex-wrap:wrap}}
+  </style>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="./" aria-label="MAKE ENTRY 홈">
+        <span class="brand-mark">M</span>
+        <span>MAKE ENTRY<small>PROJECT ARCHIVE</small></span>
+      </a>
+      <nav aria-label="주 메뉴">
+        <a href="#works">작품 둘러보기</a>
+        <a class="nav-pill" href="#works">프로젝트 모음 <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <div class="eyebrow"><span class="dot"></span> ENTRY PROJECT COLLECTION</div>
+          <h1>상상을 만들고,<br><span>작품으로 남기다.</span></h1>
+          <p class="lead">직접 기획하고 만든 엔트리 작품을 한곳에 모았습니다.<br>마음에 드는 프로젝트를 살펴보고 완성된 파일을 내려받아 보세요.</p>
+          <div class="hero-actions">
+            <a class="primary" href="#works">작품 구경하기 <span aria-hidden="true">↓</span></a>
+            <a class="secondary" href="#guide">이용 안내</a>
+          </div>
+        </div>
+        <div class="visual" aria-hidden="true">
+          <div class="orb"></div>
+          <div class="code-card">
+            <div class="window-bar"><i></i><i></i><i></i><span>MY ENTRY PROJECT</span></div>
+            <div class="code-body">
+              <div class="comment">// 나만의 아이디어를 작품으로</div>
+              <div><span class="purple">project</span> = {</div>
+              <div>&nbsp;&nbsp;<span class="key">"idea"</span>: <span class="value">"imagination"</span>,</div>
+              <div>&nbsp;&nbsp;<span class="key">"create"</span>: <span class="value">true</span>,</div>
+              <div>&nbsp;&nbsp;<span class="key">"share"</span>: <span class="value">"with everyone"</span></div>
+              <div>}</div>
+              <div class="comment" style="margin-top:9px">// ready to create something?</div>
+            </div>
+          </div>
+          <div class="float-tag"><b>●</b> YOUR NEXT PROJECT</div>
+        </div>
+      </section>
+
+      <section class="works" id="works">
+        <div class="section-head">
+          <div><div class="section-kicker">THE COLLECTION</div><h2>엔트리 작품</h2></div>
+          <div class="section-note" id="work-count">등록된 작품 0개</div>
+        </div>
+        <div id="work-list" class="empty">
+          <div class="empty-icon" aria-hidden="true">＋</div>
+          <h3>아직 등록된 작품이 없어요</h3>
+          <p>새로운 엔트리 작품이 완성되면 이곳에 추가됩니다.<br>작품을 선택해 소개를 확인하고 .ent 파일을 다운로드할 수 있어요.</p>
+          <div class="status">MORE PROJECTS COMING SOON</div>
+        </div>
+      </section>
+
+      <section id="guide" style="padding:0 0 75px">
+        <div class="section-head"><div><div class="section-kicker">HOW IT WORKS</div><h2>간단한 이용 방법</h2></div></div>
+        <div class="info-row">
+          <div class="info"><strong>01. 작품 선택</strong><span>목록에서 원하는 엔트리 작품을 선택합니다.</span></div>
+          <div class="info"><strong>02. 작품 확인</strong><span>작품 소개와 주요 내용을 확인합니다.</span></div>
+          <div class="info"><strong>03. 파일 다운로드</strong><span>완성된 .ent 프로젝트 파일을 내려받습니다.</span></div>
+        </div>
+      </section>
+    </main>
+
+    <footer><div class="footer-inner"><span>© 2026 MAKE ENTRY. ALL PROJECTS, ONE PLACE.</span><span>Made for creative ideas.</span></div></footer>
+  </div>
+  <script>
+    // 새 작품이 추가되면 작품 정보가 이 영역에 연결됩니다.
+    // 현재는 등록된 작품이 없으므로 빈 상태를 표시합니다.
+    const works = [];
+    const list = document.getElementById('work-list');
+    document.getElementById('work-count').textContent = '등록된 작품 ' + works.length + '개';
+    if (works.length) {
+      list.className = 'work-grid';
+      list.innerHTML = works.map(work => `
+        <a class="work-card" href="${work.path}/">
+          <img src="${work.thumbnail}" alt="">
+          <h3>${work.name}</h3>
+          <p>${work.description || ''}</p>
+          <span>작품 보기 →</span>
+        </a>`).join('');
+    }
+  </script>
+</body>
+</html>
